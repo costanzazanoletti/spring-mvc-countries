@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <div th:replace="fragments :: head"></div>
+	    <title th:text="${country.name}"></title> 
+	</head>
+	<body>
+		<div class="container pt-3" th:object="${country}">
+		<a th:href="@{'/'}" class="btn btn-primary float-end">Back</a>
+			<h1>
+				<span th:text="*{name}"></span>
+				<img th:unless="${#strings.isEmpty(country.countryCode2)}" th:src="@{'https://flagcdn.com/36x27/'+ ${#strings.toLowerCase(country.countryCode2)} +'.png'}" alt="flag">
+			</h1>
+			<hr/>
+			<dl class="row">
+				<dt class="col-3">Geographic Area:</dt>
+				<dd class="col-9" th:text="${region}"></dd>
+				<dt class="col-3">Continent:</dt>
+				<dd class="col-9" th:text="${continent}"></dd>
+				<dt class="col-3">Languages:</dt>
+				<dd class="col-9">
+					<ul class="list-unstyled">
+						<li th:each="lang : ${languages}" th:text="${lang.language}"></li>
+					</ul>
+				</dd>
+			</dl>
+			
+		</div>
+		<div th:replace="fragments :: scripts"></div>
+	</body>
+</html>

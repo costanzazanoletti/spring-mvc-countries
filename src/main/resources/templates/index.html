@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <div th:replace="fragments :: head"></div>
+	    <title>Countries</title> 
+	</head>
+	<body>
+		<div class="container">
+			<h1 th:replace="fragments :: page-title('Countries of the World')"></h1>
+			<table class="table">
+			  <thead>
+			    <tr>
+			      <th scope="col">Flag</th>
+			      <th scope="col">Name</th>
+			      <th scope="col">Area</th>
+			      <th scope="col">National day</th>
+			      <th scope="col">Code 2</th>
+			      <th scope="col">Code 3</th>
+			      <th></th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr th:each="country : ${countries}">
+
+			    	<td>
+			    		<img th:unless="${#strings.isEmpty(country.countryCode2)}" th:src="@{'https://flagcdn.com/16x12/'+ ${#strings.toLowerCase(country.countryCode2)} +'.png'}" alt="flag">
+			    	</td>
+			    	<td th:text="${country.name}"></td>
+			    	<td th:text="|${#numbers.formatDecimal(country.area, 2,2,'COMMA')} kmq|"></td>
+			    	<td th:text="${country.nationalDay != null} ? ${#temporals.format(country.nationalDay ,'dd/MM/yyyy')} : 'n.d.'"></td>
+			    	<td th:text="${country.countryCode2}"></td>
+			    	<td th:text="${country.countryCode3}"></td>
+			    	<td><a class="btn btn-primary" th:href="@{|/country/${country.id}|}">Detail</a></td>
+			    </tr>  
+			  </tbody>
+			</table>
+		</div>
+		<div th:replace="fragments :: scripts"></div>
+	</body>
+</html>
